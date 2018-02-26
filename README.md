@@ -1,2 +1,1 @@
-# multi-digit-captcha-recognition
-Recognize multi-digit captcha using AI
+Recognize EMS captcha using AI
