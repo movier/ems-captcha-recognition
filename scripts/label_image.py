@@ -67,7 +67,7 @@ def load_labels(label_file):
     label.append(l.rstrip())
   return label
 
-if __name__ == "__main__":
+def predict(image):
   file_name = "tf_files/flower_photos/daisy/3475870145_685a19116d.jpg"
   model_file = "ems_captcha/retrained_graph.pb"
   label_file = "ems_captcha/retrained_labels.txt"
@@ -86,8 +86,8 @@ if __name__ == "__main__":
   parser.add_argument("--output_layer", help="name of output layer")
   args = parser.parse_args()
 
-  if args.image:
-    file_name = args.image
+  if image:
+    file_name = image
   if args.input_mean:
     input_mean = args.input_mean
   if args.input_std:
@@ -123,3 +123,12 @@ if __name__ == "__main__":
 
   for i in top_k:
     print(labels[i], results[i])
+
+  return labels[top_k[0]]
+
+
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--image", help="image to be processed")
+  args = parser.parse_args()
+  print(predict(args.image))
