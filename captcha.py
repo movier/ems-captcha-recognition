@@ -23,5 +23,6 @@ for name in os.listdir(dataDir):
     for i in range(6):
         x += w if i > 0 else 0 
         region = im.crop((x, y, x + w, y + h))
+        resize = region.resize((128, 197), Image.BILINEAR)
         segmentName = random.randint(1, 9999)
-        region.save("./%s/%s/%d.jpeg" % (imageDir, value[i], segmentName))
+        resize.save("./%s/%s/%d.jpeg" % (imageDir, value[i], segmentName))
