@@ -16,10 +16,13 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+from PIL import Image
 
+import random
 import argparse
 import sys
 import time
+import os
 
 import numpy as np
 import tensorflow as tf
@@ -67,7 +70,7 @@ def load_labels(label_file):
     label.append(l.rstrip())
   return label
 
-def predict(image):
+def predict_segment(image):
   file_name = "tf_files/flower_photos/daisy/3475870145_685a19116d.jpg"
   model_file = "ems_captcha/retrained_graph.pb"
   label_file = "ems_captcha/retrained_labels.txt"
@@ -119,16 +122,41 @@ def predict(image):
   top_k = results.argsort()[-5:][::-1]
   labels = load_labels(label_file)
 
-  print('\nEvaluation time (1-image): {:.3f}s\n'.format(end-start))
+  print('Evaluation time (1-image): {:.3f}s'.format(end-start))
 
-  for i in top_k:
-    print(labels[i], results[i])
+  # for i in top_k:
+    # print(labels[i], results[i])
 
   return labels[top_k[0]]
 
+def predict(image):
+  y = 0
+  w = 13
+  h = 20
+  x = 5
+  
+  im = Image.open(image)
+  result = ""
+  for i in range(6):
+    start = time.time()
+    x += w if i > 0 else 0 
+    region = im.crop((x, y, x + w, y + h))
+    resize = region.resize((128, 197), Image.BILINEAR)
+    segmentName = "%d.jpeg" % random.randint(1, 9999)
+    resize.save(segmentName)
+    result += predict_segment(segmentName)
+    os.remove(segmentName)
+    end = time.time()
+    print('Process + Evaluation: {:.3f}s\n'.format(end-start)) 
+  return result
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("--image", help="image to be processed")
   args = parser.parse_args()
-  print(predict(args.image))
+  start = time.time()
+  result = predict(args.image)
+  end = time.time()
+  print("Result: %s" % result)
+  print('Total: {:.3f}s\n'.format(end-start))
+  
