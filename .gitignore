@@ -1,2 +1,5 @@
 .DS_Store
 digit_images
+
+### JupyterNotebook ###
+.ipynb_checkpoints
