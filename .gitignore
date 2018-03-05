@@ -3,3 +3,5 @@ digit_images
 
 ### JupyterNotebook ###
 .ipynb_checkpoints
+
+*.pyc
