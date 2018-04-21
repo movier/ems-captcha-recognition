@@ -5,3 +5,4 @@ digit_images
 .ipynb_checkpoints
 
 *.pyc
+.vscode
