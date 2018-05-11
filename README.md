@@ -11,3 +11,8 @@ It's a pipenv project. Install pipenv and libraries and run following commands t
 pipenv shell
 jupyter notebook
 ```
+
+To predict a captcha run:
+```sh
+python -m scripts.label_image --image=ems_captcha_sample.jpg
+```
