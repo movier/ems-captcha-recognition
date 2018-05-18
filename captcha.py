@@ -11,7 +11,7 @@ for i in range(10):
     if not os.path.exists(dir):
         os.makedirs(dir)
 
-dataDir = "./captcha/"
+dataDir = "./data/"
 y = 0
 w = 13
 h = 20

@@ -6,3 +6,5 @@ digit_images
 
 *.pyc
 .vscode
+
+tf_files
